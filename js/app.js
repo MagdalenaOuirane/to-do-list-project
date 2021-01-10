@@ -68,30 +68,27 @@ link3.appendChild(circleTime);
 divItem.appendChild(newDivEl);
 
 input.value="";
+
+
+newDivEl.querySelector('a.delete-item').addEventListener('click',removeTask)
+}
+
+form.addEventListener('click',addItem);
+
+
+const removeTask = (e) => {
+
+    e.target.parentNode.parentNode.parentNode.remove();
+    console.log(e.target.parentNode.parentNode.parentNode.remove());
 }
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-form.addEventListener('click',addItem);
-
-
-
-
-
+clearBtn.addEventListener('click', (e) => {
+     divItem.textContent = "";
+})
 
 
 
