@@ -6,83 +6,94 @@ const divItem = document.querySelector('.item-list');
 
 const clearBtn = document.getElementById('clear-list');
 
+const alertDiv = document.querySelector('.alert');
+
+
+let editEl;
+let editFlag = false;
+let editId = "";
+
 
 
 
 
 const addItem = (e) => {
+
+
 e.preventDefault();
 console.log(e);
 
 const newItem = input.value;
 console.log(newItem);
 
-if (newItem === "") return;
-
-const newDivEl = document.createElement('div');
-console.log(newDivEl);
-newDivEl.classList.add("item","my-3");
-
-newDivEl.appendChild(document.createTextNode(newItem));
-
-newDivEl.innerHTML = `<h5 class="item-name text-capitalize">laundry</h5>
-<div class="item-icons">
- <a href="#" class="complete-item mx-2 item-icon"><i class="far fa-check-circle"></i></a>
- <a href="#" class="edit-item mx-2 item-icon"><i class="far fa-edit"></i></a>
- <a href="#" class="delete-item item-icon"><i class="far fa-times-circle"></i></a>
-</div>`;
-
-// const h5 = document.createElement('h5');
-// h5.classList.add("item-name","text-capitalize");
-// newDivEl.appendChild(h5);
+const id = new Date().getTime().toString();
+console.log(id);
 
 
-// const iconDiv = document.createElement('div');
-// iconDiv.className = "item-icons";
-// newDivEl.appendChild(iconDiv);
+if ( newItem !== "" && editFlag === false) {
 
-// const link = document.createElement('a');
-// link.setAttribute('href', "#");
-// link.classList.add('complete-item', "mx2", "item-icon");
-// iconDiv.appendChild(link);
+    const newDivEl = document.createElement('div');
+    console.log(newDivEl);
+    newDivEl.classList.add("item","my-3");
 
-// const circleCheck = document.createElement('i');
-// circleCheck.classList.add("far","fa-check-circle");
-// link.appendChild(circleCheck);
+    //add id
+    const attr = document.createAttribute('data-id');
+    attr.value = id;
+    newDivEl.setAttributeNode(attr);
+
+    newDivEl.innerHTML = `<h5 class="item-name text-capitalize">${newItem}</h5>
+    <div class="item-icons">
+     <a href="#" class="complete-item mx-2 item-icon"><i class="far fa-check-circle"></i></a>
+     <a href="#" class="edit-item mx-2 item-icon"><i class="far fa-edit"></i></a>
+     <a href="#" class="delete-item item-icon"><i class="far fa-times-circle"></i></a>
+    </div>`;
+
+    //append Child
+      divItem.appendChild(newDivEl);
+
+    //add to localStorage
+    addToLocalStorage(id, newItem);
+    //set back to Default
+    setBackToDefault()
 
 
 
-// link2 =document.createElement('a');
-// link2.setAttribute('href', "#");
-// link2.classList.add('edit-item', "mx2", "item-icon");
-// iconDiv.appendChild(link2);
-
-// const faEdit = document.createElement('i');
-// faEdit.classList.add("far", "fa-edit");
-// link2.appendChild(faEdit);
 
 
-// link3 =document.createElement('a');
-// link3.setAttribute('href', "#");
-// link3.classList.add('delete-item', "item-icon");
-// iconDiv.appendChild(link3);
+    console.log("newItem added to the list")
+} else if (newItem !== "" && editFlag === true) {
+    console.log("editing");
+} else {
+   alertDiv.style.display = "block";
+  
+   setTimeout(function(){
+    alertDiv.style.display = "none"; 
+   },2000)
+}
 
-// const circleTime = document.createElement('i');
-// circleTime.classList.add("far", "fa-times-circle");
-// link3.appendChild(circleTime);
+//set back to default
+function setBackToDefault() {
+    console.log('set back to default');
+}
+
+// LOCAL STORAGE
+function addToLocalStorage(id, newItem) {
+    console.log('added to local storage');
+}
 
 
-divItem.appendChild(newDivEl);
+
+
 
 input.value="";
 
 
-newDivEl.querySelector('a.delete-item').addEventListener('click',removeTask);
+// newDivEl.querySelector('a.delete-item').addEventListener('click',removeTask);
 
 // newDivEl.querySelector('a.complete-item').addEventListener('click', toggleClass);
 }
 
-form.addEventListener('click',addItem);
+form.addEventListener('submit',addItem);
 
 
 const removeTask = (e) => {
