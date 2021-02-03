@@ -174,4 +174,5 @@ form.addEventListener("submit", addItem);
 
 clearBtn.addEventListener("click", (e) => {
   divItemList.textContent = "";
+  localStorage.removeItem('list');
 });
